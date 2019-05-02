@@ -33,7 +33,7 @@ def command():
   channelMsg = slack_client.api_call(
     "chat.postMessage",
     channel="#" + info["channel_name"],
-    text="Hey there! It works. Your question was: " + request.form.text
+    text="Hey there! It works. Your question was: '" + request.form.get('text', "...wait, you didn't ask a question!") + "'"
   )
 
   return make_response("", 200)
