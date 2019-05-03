@@ -4,7 +4,7 @@ import os
 from slackclient import SlackClient
 from slashCommand import *
 
-slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
+slack_client = SlackClient(os.environ["SLACK_BOT_TOKEN"])
 app = Flask(__name__)
 
 commander = Slash("Hey there! It works.")
@@ -15,7 +15,10 @@ commander = Slash("Hey there! It works.")
 def command():
   info = request.form
 
-  print(request)
+  print("\n ------------ Request info \n")
+  print(request.headers)
+  print(info)
+  print("\n ------------------ End request info \n")
 
   # # get uid of the user
   # im_id = slack_client.api_call(
@@ -33,7 +36,7 @@ def command():
   channelMsg = slack_client.api_call(
     "chat.postMessage",
     channel="#" + info["channel_name"],
-    text="Hey there! It works. Your question was: '" + request.form.get('text', "...wait, you didn't ask a question!") + "'"
+    text="Hey there! It works. Your question was: '" + info.get("text", "...wait, you didn't ask a question!") + "'"
   )
 
   return make_response("", 200)
